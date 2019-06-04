@@ -16,6 +16,4 @@ def LoadData(path, start_date, end_date, failure = None, serial = None):
             data = data.loc[data['serial_number'].isin(serial)]
             print('Entries of ' + single_date.strftime("%Y-%m-%d") + '.csv with failed drive serial number loaded!')
 
-
-
     return data

@@ -1,0 +1,34 @@
+Source;Fleet Type;Fleet Feature Type;Output Type;Tolerance to missing values;Tolerance to noise;Performance on few data;General accuracy;Robustness;Speed;Memory efficiency;Explainability;Parameter handling
+(Salvador Palau et al. 2019);Heterogeneous;Numerical;Point-estimate;1;4;5;2;2;5;5;1;1
+(Jordan et al. 2018);Homogeneous;Categorical;Point-estimate;1;1;2;1;1;5;5;5;5
+"(Wang et al. 2012; Jardine et al. 2001)";Homogeneous;None;Distribution;3;1;3;1;1;4;4;5;5
+(Lukens and Markham 2018);Heterogeneous;Categorical;Point-estimate;3;1;3;1;1;4;5;5;5
+(Wolak 2018);Homogeneous;Categorical;Point-estimate;3;1;3;1;1;4;5;5;5
+(Bracke and Sochacki 2015);Homogeneous;None;Point-estimate;3;1;2;1;1;4;5;5;5
+(Wang et al. 2018);Homogeneous;Categorical;Distribution;4;1;1;2;2;4;4;3;5
+(Hubbard et al. 2016);Identical;None;Distribution;3;3;3;2;3;4;4;4;4
+(Kammoun and Rezg 2018);Heterogeneous;Numerical;Point-estimate;4;1;3;2;3;4;4;4;2
+(Liu et al. 2007);Identical;Numerical;Interval;3;1;2;2;3;3;3;4;5
+"(Duong et al. 2018; Duong and Raghavan 2019)";Homogeneous;Categorical;Distribution;4;2;5;3;4;2;3;3;3
+(Wayne and Arres 2013);Homogeneous;None;Distribution;4;2;5;3;4;2;3;3;3
+(Ling and Mahadevan 2011, 2012);Homogeneous;None;Distribution;5;5;4;3;3;2;3;3;4
+"(Leone et al. 2017; Subbiah and Turrin 2015)";Heterogeneous;Numerical;Distribution;3;1;3;2;1;3;3;4;3
+(Poot-Geertman et al. 2015);Homogeneous;Categorical;Distribution;3;1;3;2;1;3;3;4;3
+(Hoffman 2009);Homogeneous;None;Distribution;3;1;3;2;1;3;3;4;3
+(Zaidan et al. 2015, 2016);Homogeneous;Categorical;Distribution;5;5;4;3;3;3;2;3;4
+(Rigamonti et al. 2018);Homogeneous;Categorical;Point-estimate;1;3;1;4;3;3;2;1;1
+(Zaidan, Harrison, et al. 2015);Homogeneous;Categorical;Distribution;5;5;4;3;3;2;2;3;4
+(Peel 2008);Homogeneous;Numerical;Point-estimate;1;3;1;5;5;1;1;1;1
+"(Peng et al. 2012; Heimes 2008; Trilla et al. 2018)";Homogeneous;None;Point-estimate;1;3;1;5;4;1;2;2;1
+"(Gebraeel and Lawley 2008; Huang et al. 2007; Gebraeel et al. 2004; Shao and Nezu 2000)";Identical;None;Point-estimate;1;3;1;5;4;1;2;2;1
+"(Rigamonti et al. 2016; Babu et al. 2016; Riad et al. 2010)";Homogeneous;Numerical;Point-estimate;1;3;1;5;4;1;2;1;1
+"(Voronov et al. 2018; Frisk et al. 2014)";Homogeneous;Categorical;Point-estimate;4;4;2;4;4;3;1;4;3
+(Raghavan and Frey 2016);Identical;None;Interval;4;2;1;2;3;2;1;3;4
+(Teixeira et al. 2015);Homogeneous;None;Interval;4;2;1;2;3;2;1;3;4
+(Razavi-Far et al. 2018);Homogeneous;None;Point-estimate;1;3;1;5;4;1;1;1;1
+(Voisin et al. 2013);Heterogeneous;Semantics;Distribution;2;4;2;4;4;1;1;3;4
+"(Nuhic et al. 2018; Baptista et al. 2016; Nicchiotti and Ruegg 2014)";Homogeneous;None;Point-estimate;2;2;2;5;3;1;1;1;1
+(Hu et al. 2012);Homogeneous;Numerical;Point-estimate;1;4;1;5;5;1;1;1;1
+(Lim et al. 2014);Homogeneous;Numerical;Point-estimate;1;4;1;5;5;1;1;1;1
+(Wang et al. 2004, Zhao et al. 2009, Soualhi 2014, Mahdaoui 2012);None;None;;2;2;1;4;4;1;1;2;1
+(Al-Dahidi et al. 2016, 2017a, 2017b);Heterogeneous;Numerical;Distribution;4;2;1;2;4;1;1;3;4
