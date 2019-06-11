@@ -1,0 +1,790 @@
+C:\Users\kwesendrup\AppData\Local\Programs\Python\Python37\python.exe C:/Users/kwesendrup/PycharmProjects/master/backblaze/main.py
+STARTING MODEL ST4000DM000
+Raw dataset loaded!
+Serials: 4799, Shape: (2026705, 129)
+Task time: 8.28
+Total time: 8.28
+Start of data preprocessing
+Serials: 4799, Shape: (2026705, 129)
+After model reduction
+Serials: 2686, Shape: (1346358, 129)
+Task time: 3.46
+Total time: 11.88
+After pruning features and adding RUL
+Serials: 2685, Shape: (1346357, 130)
+Task time: 11.01
+Total time: 23.0
+After normalization
+Serials: 2685, Shape: (1346357, 130)
+Task time: 6.3
+Total time: 29.4
+NaNs:
+date                              0
+serial_number                     0
+model                             0
+capacity_bytes                    0
+failure                           0
+smart_1_normalized               15
+smart_1_raw                      15
+smart_2_normalized          1346357
+smart_2_raw                 1346357
+smart_3_normalized               15
+smart_3_raw                 1346357
+smart_4_normalized               15
+smart_4_raw                      15
+smart_5_normalized               15
+Reallocated_Sector_Count         15
+smart_7_normalized               15
+smart_7_raw                      15
+smart_8_normalized          1346357
+smart_8_raw                 1346357
+smart_9_normalized               15
+Days_In_Service                  15
+smart_10_normalized         1346357
+smart_10_raw                1346357
+smart_11_normalized         1346357
+smart_11_raw                1346357
+smart_12_normalized         1346357
+smart_12_raw                     15
+smart_13_normalized         1346357
+smart_13_raw                1346357
+smart_15_normalized         1346357
+                             ...   
+smart_181_raw               1346357
+smart_182_normalized        1346357
+smart_182_raw               1346357
+smart_235_normalized        1346357
+smart_235_raw               1346357
+smart_23_normalized         1346357
+smart_23_raw                1346357
+smart_24_normalized         1346357
+smart_24_raw                1346357
+smart_16_normalized         1346357
+smart_16_raw                1346357
+smart_17_normalized         1346357
+smart_17_raw                1346357
+smart_168_normalized        1346357
+smart_168_raw               1346357
+smart_170_normalized        1346357
+smart_170_raw               1346357
+smart_173_normalized        1346357
+smart_173_raw               1346357
+smart_174_normalized        1346357
+smart_174_raw               1346357
+smart_218_normalized        1346357
+smart_218_raw               1346357
+smart_231_normalized        1346357
+smart_231_raw               1346357
+smart_232_normalized        1346357
+smart_232_raw               1346357
+smart_233_normalized        1346357
+smart_233_raw               1346357
+RUL                               0
+Length: 130, dtype: int64
+After dropping NaN columns
+Serials: 2685, Shape: (1346357, 44)
+Task time: 6.69
+Total time: 36.18
+After dropping constant columns
+Serials: 2685, Shape: (1346357, 43)
+Task time: 2.22
+Total time: 38.51
+NaNs:
+date                              0
+serial_number                     0
+capacity_bytes                    0
+failure                           0
+smart_1_normalized               15
+smart_1_raw                      15
+smart_3_normalized               15
+smart_4_normalized               15
+smart_4_raw                      15
+smart_5_normalized               15
+Reallocated_Sector_Count         15
+smart_7_normalized               15
+smart_7_raw                      15
+smart_9_normalized               15
+Days_In_Service                  15
+smart_12_raw                     15
+smart_183_normalized             15
+smart_183_raw                    15
+smart_184_normalized             15
+smart_184_raw                    15
+smart_187_normalized             15
+Reported_Uncorrectable_Errors    15
+smart_188_normalized             15
+Command_Timeout                  15
+smart_189_normalized             15
+smart_189_raw                    15
+smart_190_normalized             15
+smart_190_raw                    15
+smart_192_normalized             15
+smart_192_raw                    15
+smart_193_normalized             15
+smart_193_raw                    15
+smart_194_normalized             15
+smart_194_raw                    15
+smart_197_normalized             15
+Current_Pending_Sector_Count     15
+smart_198_normalized             15
+Offline_Uncorrectable            15
+smart_199_raw                    15
+smart_240_raw                    15
+smart_241_raw                    15
+smart_242_raw                    15
+RUL                               0
+dtype: int64
+After dropping NaN rows
+Serials: 2685, Shape: (1346342, 43)
+Task time: 3.05
+Total time: 41.66
+After feature engineering
+Serials: 2685, Shape: (1346342, 347)
+Task time: 4125.08
+Total time: 4166.84
+After dropping NaN caused by feature engineering
+Serials: 2647, Shape: (1322352, 347)
+Task time: 36.09
+Total time: 4203.03
+After dropping constant columns caused by feature engineering
+Serials: 2647, Shape: (1322352, 345)
+Task time: 26.95
+Total time: 4230.12
+Dataset preprocessed and saved!
+Serials: 2647, Shape: (1322352, 345)
+Task time: 47.98
+Total time: 4278.28
+Test data set saved!
+Serials: 529, Shape: (273404, 345)
+Training data set saved!
+Serials: 2118, Shape: (1048948, 345)
+Task time: 111.31
+Total time: 4389.79
+STARTING MODEL ST12000NM0007
+Raw dataset loaded!
+Serials: 4799, Shape: (2026705, 129)
+Task time: 8.63
+Total time: 4398.43
+Start of data preprocessing
+Serials: 4799, Shape: (2026705, 129)
+After model reduction
+Serials: 494, Shape: (118906, 129)
+Task time: 1.19
+Total time: 4399.76
+After pruning features and adding RUL
+Serials: 494, Shape: (118906, 130)
+Task time: 1.19
+Total time: 4400.97
+After normalization
+Serials: 494, Shape: (118906, 130)
+Task time: 0.5
+Total time: 4401.48
+NaNs:
+date                             0
+serial_number                    0
+model                            0
+capacity_bytes                   0
+failure                          0
+smart_1_normalized               9
+smart_1_raw                      9
+smart_2_normalized          118906
+smart_2_raw                 118906
+smart_3_normalized               9
+smart_3_raw                 118906
+smart_4_normalized          118906
+smart_4_raw                      9
+smart_5_normalized               9
+Reallocated_Sector_Count         9
+smart_7_normalized               9
+smart_7_raw                      9
+smart_8_normalized          118906
+smart_8_raw                 118906
+smart_9_normalized               9
+Days_In_Service                  9
+smart_10_normalized         118906
+smart_10_raw                118906
+smart_11_normalized         118906
+smart_11_raw                118906
+smart_12_normalized         118906
+smart_12_raw                     9
+smart_13_normalized         118906
+smart_13_raw                118906
+smart_15_normalized         118906
+                             ...  
+smart_181_raw               118906
+smart_182_normalized        118906
+smart_182_raw               118906
+smart_235_normalized        118906
+smart_235_raw               118906
+smart_23_normalized         118906
+smart_23_raw                118906
+smart_24_normalized         118906
+smart_24_raw                118906
+smart_16_normalized         118906
+smart_16_raw                118906
+smart_17_normalized         118906
+smart_17_raw                118906
+smart_168_normalized        118906
+smart_168_raw               118906
+smart_170_normalized        118906
+smart_170_raw               118906
+smart_173_normalized        118906
+smart_173_raw               118906
+smart_174_normalized        118906
+smart_174_raw               118906
+smart_218_normalized        118906
+smart_218_raw               118906
+smart_231_normalized        118906
+smart_231_raw               118906
+smart_232_normalized        118906
+smart_232_raw               118906
+smart_233_normalized        118906
+smart_233_raw               118906
+RUL                              0
+Length: 130, dtype: int64
+After dropping NaN columns
+Serials: 494, Shape: (118906, 39)
+Task time: 0.58
+Total time: 4402.07
+After dropping constant columns
+Serials: 494, Shape: (118906, 38)
+Task time: 0.29
+Total time: 4402.37
+NaNs:
+date                             0
+serial_number                    0
+capacity_bytes                   0
+failure                          0
+smart_1_normalized               9
+smart_1_raw                      9
+smart_3_normalized               9
+smart_4_raw                      9
+smart_5_normalized               9
+Reallocated_Sector_Count         9
+smart_7_normalized               9
+smart_7_raw                      9
+smart_9_normalized               9
+Days_In_Service                  9
+smart_12_raw                     9
+smart_187_normalized             9
+Reported_Uncorrectable_Errors    9
+smart_188_normalized             9
+Command_Timeout                  9
+smart_190_normalized             9
+smart_190_raw                    9
+smart_192_raw                    9
+smart_193_normalized             9
+smart_193_raw                    9
+smart_194_normalized             9
+smart_194_raw                    9
+smart_195_normalized             9
+smart_195_raw                    9
+smart_197_normalized             9
+Current_Pending_Sector_Count     9
+smart_198_normalized             9
+Offline_Uncorrectable            9
+smart_199_raw                    9
+smart_200_normalized             9
+smart_240_raw                    9
+smart_241_raw                    9
+smart_242_raw                    9
+RUL                              0
+dtype: int64
+After dropping NaN rows
+Serials: 493, Shape: (118897, 38)
+Task time: 0.26
+Total time: 4402.64
+After feature engineering
+Serials: 493, Shape: (118897, 302)
+Task time: 219.4
+Total time: 4622.06
+After dropping NaN caused by feature engineering
+Serials: 476, Shape: (114543, 302)
+Task time: 1.22
+Total time: 4623.29
+After dropping constant columns caused by feature engineering
+Serials: 476, Shape: (114543, 294)
+Task time: 1.5
+Total time: 4624.79
+Dataset preprocessed and saved!
+Serials: 476, Shape: (114543, 294)
+Task time: 1.34
+Total time: 4626.14
+Test data set saved!
+Serials: 95, Shape: (22957, 294)
+Training data set saved!
+Serials: 381, Shape: (91586, 294)
+Task time: 2.57
+Total time: 4628.72
+STARTING MODEL ST8000NM0055
+Raw dataset loaded!
+Serials: 4799, Shape: (2026705, 129)
+Task time: 4.15
+Total time: 4632.87
+Start of data preprocessing
+Serials: 4799, Shape: (2026705, 129)
+After model reduction
+Serials: 271, Shape: (87044, 129)
+Task time: 1.07
+Total time: 4634.07
+After pruning features and adding RUL
+Serials: 271, Shape: (87044, 130)
+Task time: 0.67
+Total time: 4634.75
+After normalization
+Serials: 271, Shape: (87044, 130)
+Task time: 0.31
+Total time: 4635.07
+NaNs:
+date                            0
+serial_number                   0
+model                           0
+capacity_bytes                  0
+failure                         0
+smart_1_normalized             47
+smart_1_raw                    47
+smart_2_normalized          87044
+smart_2_raw                 87044
+smart_3_normalized             47
+smart_3_raw                 87044
+smart_4_normalized          87044
+smart_4_raw                    47
+smart_5_normalized             47
+Reallocated_Sector_Count       47
+smart_7_normalized             47
+smart_7_raw                    47
+smart_8_normalized          87044
+smart_8_raw                 87044
+smart_9_normalized             47
+Days_In_Service                47
+smart_10_normalized         87044
+smart_10_raw                87044
+smart_11_normalized         87044
+smart_11_raw                87044
+smart_12_normalized         87044
+smart_12_raw                   47
+smart_13_normalized         87044
+smart_13_raw                87044
+smart_15_normalized         87044
+                            ...  
+smart_181_raw               87044
+smart_182_normalized        87044
+smart_182_raw               87044
+smart_235_normalized        87044
+smart_235_raw               87044
+smart_23_normalized         87044
+smart_23_raw                87044
+smart_24_normalized         87044
+smart_24_raw                87044
+smart_16_normalized         87044
+smart_16_raw                87044
+smart_17_normalized         87044
+smart_17_raw                87044
+smart_168_normalized        87044
+smart_168_raw               87044
+smart_170_normalized        87044
+smart_170_raw               87044
+smart_173_normalized        87044
+smart_173_raw               87044
+smart_174_normalized        87044
+smart_174_raw               87044
+smart_218_normalized        87044
+smart_218_raw               87044
+smart_231_normalized        87044
+smart_231_raw               87044
+smart_232_normalized        87044
+smart_232_raw               87044
+smart_233_normalized        87044
+smart_233_raw               87044
+RUL                             0
+Length: 130, dtype: int64
+After dropping NaN columns
+Serials: 271, Shape: (87044, 42)
+Task time: 0.42
+Total time: 4635.49
+After dropping constant columns
+Serials: 271, Shape: (87044, 41)
+Task time: 0.14
+Total time: 4635.64
+NaNs:
+date                              0
+serial_number                     0
+capacity_bytes                    0
+failure                           0
+smart_1_normalized               47
+smart_1_raw                      47
+smart_3_normalized               47
+smart_4_raw                      47
+smart_5_normalized               47
+Reallocated_Sector_Count         47
+smart_7_normalized               47
+smart_7_raw                      47
+smart_9_normalized               47
+Days_In_Service                  47
+smart_12_raw                     47
+smart_184_normalized             47
+smart_184_raw                    47
+smart_187_normalized             47
+Reported_Uncorrectable_Errors    47
+Command_Timeout                  47
+smart_190_normalized             47
+smart_190_raw                    47
+smart_191_normalized             47
+smart_191_raw                    47
+smart_192_raw                    47
+smart_193_normalized             47
+smart_193_raw                    47
+smart_194_normalized             47
+smart_194_raw                    47
+smart_195_normalized             47
+smart_195_raw                    47
+smart_197_normalized             47
+Current_Pending_Sector_Count     47
+smart_198_normalized             47
+Offline_Uncorrectable            47
+smart_199_normalized             47
+smart_199_raw                    47
+smart_240_raw                    47
+smart_241_raw                    47
+smart_242_raw                    47
+RUL                               0
+dtype: int64
+After dropping NaN rows
+Serials: 271, Shape: (86997, 41)
+Task time: 0.18
+Total time: 4635.83
+After feature engineering
+Serials: 271, Shape: (86997, 329)
+Task time: 166.62
+Total time: 4802.46
+After dropping NaN caused by feature engineering
+Serials: 262, Shape: (84596, 329)
+Task time: 1.01
+Total time: 4803.47
+After dropping constant columns caused by feature engineering
+Serials: 262, Shape: (84596, 317)
+Task time: 1.01
+Total time: 4804.49
+Dataset preprocessed and saved!
+Serials: 262, Shape: (84596, 317)
+Task time: 1.06
+Total time: 4805.55
+Test data set saved!
+Serials: 52, Shape: (16259, 317)
+Training data set saved!
+Serials: 210, Shape: (68337, 317)
+Task time: 1.59
+Total time: 4807.15
+STARTING MODEL ST8000DM002
+Raw dataset loaded!
+Serials: 4799, Shape: (2026705, 129)
+Task time: 4.55
+Total time: 4811.7
+Start of data preprocessing
+Serials: 4799, Shape: (2026705, 129)
+After model reduction
+Serials: 261, Shape: (112847, 129)
+Task time: 1.23
+Total time: 4813.06
+After pruning features and adding RUL
+Serials: 260, Shape: (112846, 130)
+Task time: 0.9
+Total time: 4813.97
+After normalization
+Serials: 260, Shape: (112846, 130)
+Task time: 0.75
+Total time: 4814.73
+NaNs:
+date                             0
+serial_number                    0
+model                            0
+capacity_bytes                   0
+failure                          0
+smart_1_normalized               3
+smart_1_raw                      3
+smart_2_normalized          112846
+smart_2_raw                 112846
+smart_3_normalized               3
+smart_3_raw                 112846
+smart_4_normalized          112846
+smart_4_raw                      3
+smart_5_normalized               3
+Reallocated_Sector_Count         3
+smart_7_normalized               3
+smart_7_raw                      3
+smart_8_normalized          112846
+smart_8_raw                 112846
+smart_9_normalized               3
+Days_In_Service                  3
+smart_10_normalized         112846
+smart_10_raw                112846
+smart_11_normalized         112846
+smart_11_raw                112846
+smart_12_normalized         112846
+smart_12_raw                     3
+smart_13_normalized         112846
+smart_13_raw                112846
+smart_15_normalized         112846
+                             ...  
+smart_181_raw               112846
+smart_182_normalized        112846
+smart_182_raw               112846
+smart_235_normalized        112846
+smart_235_raw               112846
+smart_23_normalized         112846
+smart_23_raw                112846
+smart_24_normalized         112846
+smart_24_raw                112846
+smart_16_normalized         112846
+smart_16_raw                112846
+smart_17_normalized         112846
+smart_17_raw                112846
+smart_168_normalized        112846
+smart_168_raw               112846
+smart_170_normalized        112846
+smart_170_raw               112846
+smart_173_normalized        112846
+smart_173_raw               112846
+smart_174_normalized        112846
+smart_174_raw               112846
+smart_218_normalized        112846
+smart_218_raw               112846
+smart_231_normalized        112846
+smart_231_raw               112846
+smart_232_normalized        112846
+smart_232_raw               112846
+smart_233_normalized        112846
+smart_233_raw               112846
+RUL                              0
+Length: 130, dtype: int64
+After dropping NaN columns
+Serials: 260, Shape: (112846, 42)
+Task time: 0.56
+Total time: 4815.3
+After dropping constant columns
+Serials: 260, Shape: (112846, 41)
+Task time: 0.21
+Total time: 4815.53
+NaNs:
+date                             0
+serial_number                    0
+capacity_bytes                   0
+failure                          0
+smart_1_normalized               3
+smart_1_raw                      3
+smart_3_normalized               3
+smart_4_raw                      3
+smart_5_normalized               3
+Reallocated_Sector_Count         3
+smart_7_normalized               3
+smart_7_raw                      3
+smart_9_normalized               3
+Days_In_Service                  3
+smart_12_raw                     3
+smart_184_normalized             3
+smart_184_raw                    3
+smart_187_normalized             3
+Reported_Uncorrectable_Errors    3
+smart_188_normalized             3
+Command_Timeout                  3
+smart_190_normalized             3
+smart_190_raw                    3
+smart_191_normalized             3
+smart_191_raw                    3
+smart_192_raw                    3
+smart_193_normalized             3
+smart_193_raw                    3
+smart_194_normalized             3
+smart_194_raw                    3
+smart_195_normalized             3
+smart_195_raw                    3
+smart_197_normalized             3
+Current_Pending_Sector_Count     3
+smart_198_normalized             3
+Offline_Uncorrectable            3
+smart_199_raw                    3
+smart_240_raw                    3
+smart_241_raw                    3
+smart_242_raw                    3
+RUL                              0
+dtype: int64
+After dropping NaN rows
+Serials: 260, Shape: (112843, 41)
+Task time: 0.23
+Total time: 4815.77
+After feature engineering
+Serials: 260, Shape: (112843, 329)
+Task time: 199.37
+Total time: 5015.14
+After dropping NaN caused by feature engineering
+Serials: 254, Shape: (110528, 329)
+Task time: 1.25
+Total time: 5016.4
+After dropping constant columns caused by feature engineering
+Serials: 254, Shape: (110528, 325)
+Task time: 1.5
+Total time: 5017.9
+Dataset preprocessed and saved!
+Serials: 254, Shape: (110528, 325)
+Task time: 1.4
+Total time: 5019.31
+Test data set saved!
+Serials: 50, Shape: (21906, 325)
+Training data set saved!
+Serials: 204, Shape: (88622, 325)
+Task time: 2.22
+Total time: 5021.54
+STARTING MODEL HGST HMS5C4040BLE640
+Raw dataset loaded!
+Serials: 4799, Shape: (2026705, 129)
+Task time: 4.64
+Total time: 5026.18
+Start of data preprocessing
+Serials: 4799, Shape: (2026705, 129)
+After model reduction
+Serials: 188, Shape: (65157, 129)
+Task time: 1.03
+Total time: 5027.35
+After pruning features and adding RUL
+Serials: 187, Shape: (65156, 130)
+Task time: 0.51
+Total time: 5027.87
+After normalization
+Serials: 187, Shape: (65156, 130)
+Task time: 0.74
+Total time: 5028.62
+NaNs:
+date                            0
+serial_number                   0
+model                           0
+capacity_bytes                  0
+failure                         0
+smart_1_normalized              1
+smart_1_raw                     1
+smart_2_normalized              1
+smart_2_raw                     1
+smart_3_normalized              1
+smart_3_raw                     1
+smart_4_normalized          65156
+smart_4_raw                     1
+smart_5_normalized              1
+Reallocated_Sector_Count        1
+smart_7_normalized              1
+smart_7_raw                     1
+smart_8_normalized              1
+smart_8_raw                     1
+smart_9_normalized              1
+Days_In_Service                 1
+smart_10_normalized             1
+smart_10_raw                    1
+smart_11_normalized         65156
+smart_11_raw                65156
+smart_12_normalized         65156
+smart_12_raw                    1
+smart_13_normalized         65156
+smart_13_raw                65156
+smart_15_normalized         65156
+                            ...  
+smart_181_raw               65156
+smart_182_normalized        65156
+smart_182_raw               65156
+smart_235_normalized        65156
+smart_235_raw               65156
+smart_23_normalized         65156
+smart_23_raw                65156
+smart_24_normalized         65156
+smart_24_raw                65156
+smart_16_normalized         65156
+smart_16_raw                65156
+smart_17_normalized         65156
+smart_17_raw                65156
+smart_168_normalized        65156
+smart_168_raw               65156
+smart_170_normalized        65156
+smart_170_raw               65156
+smart_173_normalized        65156
+smart_173_raw               65156
+smart_174_normalized        65156
+smart_174_raw               65156
+smart_218_normalized        65156
+smart_218_raw               65156
+smart_231_normalized        65156
+smart_231_raw               65156
+smart_232_normalized        65156
+smart_232_raw               65156
+smart_233_normalized        65156
+smart_233_raw               65156
+RUL                             0
+Length: 130, dtype: int64
+After dropping NaN columns
+Serials: 187, Shape: (65156, 35)
+Task time: 0.33
+Total time: 5028.95
+After dropping constant columns
+Serials: 187, Shape: (65156, 33)
+Task time: 0.09
+Total time: 5029.04
+NaNs:
+date                            0
+serial_number                   0
+failure                         0
+smart_1_normalized              1
+smart_1_raw                     1
+smart_2_normalized              1
+smart_2_raw                     1
+smart_3_normalized              1
+smart_3_raw                     1
+smart_4_raw                     1
+smart_5_normalized              1
+Reallocated_Sector_Count        1
+smart_7_normalized              1
+smart_7_raw                     1
+smart_8_normalized              1
+smart_8_raw                     1
+smart_9_normalized              1
+Days_In_Service                 1
+smart_10_normalized             1
+smart_10_raw                    1
+smart_12_raw                    1
+smart_192_normalized            1
+smart_192_raw                   1
+smart_193_normalized            1
+smart_193_raw                   1
+smart_194_normalized            1
+smart_194_raw                   1
+smart_196_normalized            1
+smart_196_raw                   1
+smart_197_normalized            1
+Current_Pending_Sector_Count    1
+smart_199_raw                   1
+RUL                             0
+dtype: int64
+After dropping NaN rows
+Serials: 187, Shape: (65155, 33)
+Task time: 0.11
+Total time: 5029.16
+After feature engineering
+Serials: 187, Shape: (65155, 265)
+Task time: 89.53
+Total time: 5118.69
+After dropping NaN caused by feature engineering
+Serials: 175, Shape: (63533, 265)
+Task time: 0.58
+Total time: 5119.28
+After dropping constant columns caused by feature engineering
+Serials: 175, Shape: (63533, 262)
+Task time: 0.45
+Total time: 5119.74
+Dataset preprocessed and saved!
+Serials: 175, Shape: (63533, 262)
+Task time: 0.59
+Total time: 5120.33
+Test data set saved!
+Serials: 35, Shape: (16511, 262)
+Training data set saved!
+Serials: 140, Shape: (47022, 262)
+Task time: 1.07
+Total time: 5121.4
+Finished. Total time: 5121.4
+
+Process finished with exit code 0

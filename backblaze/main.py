@@ -28,7 +28,17 @@ if __name__ == "__main__":
     ## Global
     data_path = "C:/Users/kwesendrup/PycharmProjects/master/backblaze/data/rawdata/"
     cols_no_data = ['date', 'serial_number', 'model', 'capacity_bytes', 'failure', 'RUL']
-    filtered_models = ['ST12000NM0007']
+    #filtered_models = ['ST4000DM000', 'ST12000NM0007', 'ST8000NM0055', 'ST8000DM002', 'HGST HMS5C4040BLE640']
+    # Filtered models after preprocessing
+    '''filtered_models = ['HGST HMS5C4040ALE640', 'HGST HMS5C4040BLE640', 'HGST HUH721212ALN604', 'Hitachi HDS5C3030ALA630',
+                       'Hitachi HDS5C4040ALE630', 'Hitachi HDS722020ALA330', 'Hitachi HDS723030ALA640', 'ST250LM004 HN',
+                       'ST250LT007', 'ST320LT007', 'ST500LM012 HN', 'ST500LM030', 'ST4000DM000', 'ST4000DM001',
+                       'ST4000DM005', 'ST4000DX000', 'ST6000DX000', 'ST8000DM002', 'ST8000DM004', 'ST8000NM0055',
+                       'ST10000NM0086', 'ST12000NM0007', 'ST3160316AS', 'ST3160318AS', 'ST9250315AS',
+                       'TOSHIBA DT01ACA300', 'TOSHIBA MG07ACA14TA', 'TOSHIBA MQ01ABF050', 'TOSHIBA MQ01ABF050M',
+                       'WDC WD20EFRX', 'WDC WD30EFRX', 'WDC WD60EFRX', 'WDC WD800AAJS', 'WDC WD1600AAJB',
+                       'WDC WD1600AAJS', 'WDC WD5000LPVX']'''
+    filtered_models = ['T']
     ## Init
     # Set this to false to skip csv reading and load pickle if it was already saved
     initialize_data_set = False
@@ -44,9 +54,9 @@ if __name__ == "__main__":
         # Remove hard drives that did not have measurements in the last n days. 0 does not remove any.
         measurements_in_last_n_days = 0
         # Threshold for NaN values. If threshold_nan percent values are non-NaN, the column is not dropped
-        threshold_nan = 0.966
+        threshold_nan = 0.95
         # Removes measurements before degradation is occuring if True
-        elbow_point_detection = False
+        elbow_point_detection = True
         # Rolling window size
         rolling_window = 10
     ## Train / test split
@@ -71,50 +81,54 @@ if __name__ == "__main__":
     k_cv = 5
     ### EOF Parameters ###
     start_total = timer()
-    for model in filtered_models:
-        print("STARTING MODEL " + model)
+
     ### SOF Initialize data set ###
-        if initialize_data_set:
-            start = timer()
-            # Get failed entries
-            data = LoadData(path = data_path,
-                            start_date = start_date,
-                            end_date = end_date,
-                            failure = 1,
-                            )
-            failed_serials = data['serial_number'].unique().tolist()
+    if initialize_data_set:
+        start = timer()
+        # Get failed entries
+        data = LoadData(path = data_path,
+                        start_date = start_date,
+                        end_date = end_date,
+                        failure = 1,
+                        )
+        failed_serials = data['serial_number'].unique().tolist()
 
-            # Get all entries from failed drives w/ serial number
-            data = LoadData(path = data_path,
-                            start_date = start_date,
-                            end_date = end_date,
-                            serial = failed_serials
-                            )
-            data = data.sort_values(['serial_number', 'date'], ascending=True)
-            # Save final dataframe as pickle
-            data.to_pickle (data_path + "data_raw.pkl")
-            end = timer()
-            print("<Raw dataset initialized and loaded!" + "\n" +
-                  "Serials: " + str(len(data['serial_number'].unique())) + ", Shape: " + str(data.shape) + "\n" +
-                  "Task time: " + str(round(end - start, 2)) + "\n" +
-                  "Total time: " + str(round(end - start_total, 2)))
-        elif preprocess_data_set:
-            start = timer()
-            data = pd.read_pickle(data_path + "data_raw.pkl")
-            end = timer()
-            print("Raw dataset loaded!" + "\n" +
-                  "Serials: " + str(len(data['serial_number'].unique())) + ", Shape: " + str(data.shape) + "\n" +
-                  "Task time: " + str(round(end - start, 2)) + "\n" +
-                  "Total time: " + str(round(end - start_total, 2)))
-        ### EOF Initialize data set ###
+        # Get all entries from failed drives w/ serial number
+        data = LoadData(path = data_path,
+                        start_date = start_date,
+                        end_date = end_date,
+                        serial = failed_serials
+                        )
+        data = data.sort_values(['serial_number', 'date'], ascending=True)
+        # Save final dataframe as pickle
+        data.to_pickle (data_path + "data_raw.pkl")
+        end = timer()
+        print("Raw dataset initialized and saved!" + "\n" +
+              "Serials: " + str(len(data['serial_number'].unique())) + ", Shape: " + str(data.shape) + "\n" +
+              "Task time: " + str(round(end - start, 2)) + "\n" +
+              "Total time: " + str(round(end - start_total, 2)))
 
+    ### EOF Initialize data set ###
+    if not filtered_models:
+        data = pd.read_pickle(data_path + "data_raw.pkl")
+        filtered_models = data['model'].unique()
+    for model in filtered_models:
         ### SOF Data Preprocessing ###
+        print("STARTING MODEL " + model)
+        start = timer()
+        data = pd.read_pickle(data_path + "data_raw.pkl")
+        end = timer()
+        print("Raw dataset loaded!" + "\n" +
+              "Serials: " + str(len(data['serial_number'].unique())) + ", Shape: " + str(data.shape) + "\n" +
+              "Task time: " + str(round(end - start, 2)) + "\n" +
+              "Total time: " + str(round(end - start_total, 2)))
         if preprocess_data_set:
             start = timer()
             # Filter models
             print("Start of data preprocessing" + "\n" +
                   "Serials: " + str(len(data['serial_number'].unique())) + ", Shape: " + str(data.shape))
             data = data[data['model'].str.startswith(model)].copy()
+            if data.size==0: print("Model " + model + " skipped due to zero or one sample size."); continue
             end = timer()
             print("After model reduction" + "\n" +
                   "Serials: " + str(len(data['serial_number'].unique())) + ", Shape: " + str(data.shape) + "\n" +
@@ -132,12 +146,27 @@ if __name__ == "__main__":
             # -"smart_9_raw": "Days_In_Service" is also used
 
             data = data.rename(index=str, columns={"smart_5_raw": "Reallocated_Sector_Count",
-                                                                 "smart_9_raw": "Days_In_Service",
-                                                                 "smart_187_raw": "Reported_Uncorrectable_Errors",
-                                                                 "smart_188_raw": "Command_Timeout",
-                                                                 "smart_197_raw": "Current_Pending_Sector_Count",
-                                                                 "smart_198_raw": "Offline_Uncorrectable"}).copy()
-            # TODO Remove normalized values by Regex?
+                                                   "smart_5_normalized": "Reallocated_Sector_Count_norm",
+                                                   "smart_9_raw": "Days_In_Service",
+                                                   "smart_9_normalized": "Days_In_Service_norm",
+                                                   "smart_10_raw": "Spin_Retry_Count",
+                                                   "smart_10_normalized": "Spin_Retry_Count_norm",
+                                                   "smart_184_raw": "E2E_Error",
+                                                   "smart_184_normalized": "E2E_Error_norm",
+                                                   "smart_187_raw": "Reported_Uncorrectable_Errors",
+                                                   "smart_187_normalized": "Reported_Uncorrectable_Errors_norm",
+                                                   "smart_188_raw": "Command_Timeout",
+                                                   "smart_188_normalized": "Command_Timeout_norm",
+                                                   "smart_196_raw": "Reallocation_Event_Count",
+                                                   "smart_196_normalized": "Reallocation_Event_Count_norm",
+                                                   "smart_197_raw": "Current_Pending_Sector_Count",
+                                                   "smart_197_normalized": "Current_Pending_Sector_Count_norm",
+                                                   "smart_198_raw": "Offline_Uncorrectable",
+                                                   "smart_198_normalized": "Offline_Uncorrectable_norm",
+                                                   "smart_201_raw": "Soft_Read_Error_Rate",
+                                                   "smart_201_normalized": "Soft_Read_Error_Rate_norm"}).copy()
+            # Remove normalized values
+            data.drop(list(data.filter(regex='normalized')), axis=1, inplace=True)
             #data = data[['date', 'serial_number', 'model', 'capacity_bytes', 'failure',
             #                    'Reallocated_Sector_Count', 'Days_In_Service', 'Reported_Uncorrectable_Errors',
             #                   'Command_Timeout', 'Current_Pending_Sector_Count', 'Offline_Uncorrectable']].copy()
@@ -156,8 +185,9 @@ if __name__ == "__main__":
                   "Serials: " + str(len(data['serial_number'].unique())) + ", Shape: " + str(data.shape) + "\n" +
                   "Task time: " + str(round(end - start, 2)) + "\n" +
                   "Total time: " + str(round(end - start_total, 2)))
-            # Remove hard drives that have no measurements in last 10 days
-            if measurements_in_last_n_days != 0:
+            # DEPRECATED Remove hard drives that have no measurements in last 10 days
+            # Newly identified critical columns must be added to the check
+            '''if measurements_in_last_n_days != 0:
                 start = timer()
                 df_lt_10 = data.loc[data['RUL'] <= measurements_in_last_n_days].copy()
                 df_lt_10 = df_lt_10.loc[(df_lt_10['Reallocated_Sector_Count'] != 0) |
@@ -171,10 +201,9 @@ if __name__ == "__main__":
                 print("After pruning hard drives w/o non-zero values in last " + str(measurements_in_last_n_days) + " days" + "\n" +
                      "Serials: " + str(len(data['serial_number'].unique())) + ", Shape: " + str(data.shape) + "\n" +
                     "Task time: " + str(round(end - start, 2)) + "\n" +
-                    "Total time: " + str(round(end - start_total, 2)))
+                    "Total time: " + str(round(end - start_total, 2)))'''
 
             # Min Max Normalization
-            # TODO Change to Mean Var Normalization?
             # Loop only over data columns
             start = timer()
             for feature_name in list(set(data.columns.values)- set(cols_no_data) - set(['Days_In_Service'])):
@@ -191,6 +220,7 @@ if __name__ == "__main__":
             print("NaNs:\n" + str(data.isnull().sum(axis = 0)))
             # Drop columns if all NaN
             data = data.dropna(thresh=len(data.index)*threshold_nan,axis=1, how='all')
+            if data.size==0: print("Model " + model + " skipped due to zero or one sample size."); continue
             end = timer()
             print("After dropping NaN columns" + "\n" +
                   "Serials: " + str(len(data['serial_number'].unique())) + ", Shape: " + str(data.shape) + "\n" +
@@ -200,6 +230,7 @@ if __name__ == "__main__":
             start = timer()
             cols_const = [col for col in data.columns if len(data[col].unique()) <= 1]
             data = data.drop(data[cols_const], axis=1).copy()
+            if data.size==0 or 'serial_number' not in data.columns: print("Model " + model + " skipped due to zero or one sample size."); continue
             end = timer()
             print("After dropping constant columns" + "\n" +
                   "Serials: " + str(len(data['serial_number'].unique())) + ", Shape: " + str(data.shape) + "\n" +
@@ -211,6 +242,7 @@ if __name__ == "__main__":
             start = timer()
             print("NaNs:\n" + str(data.isnull().sum(axis=0)))
             data = data.dropna()
+            if data.size==0: print("Model " + model + " skipped due to zero or one sample size."); continue
             end = timer()
             print("After dropping NaN rows" + "\n" +
                   "Serials: " + str(len(data['serial_number'].unique())) + ", Shape: " + str(data.shape) + "\n" +
@@ -257,6 +289,7 @@ if __name__ == "__main__":
                 # Drop NaNs after sliding window
                 start = timer()
                 data = data.dropna()
+                if data.size==0: print("Model " + model + " skipped due to zero or one sample size."); continue
                 end = timer()
                 print("After dropping NaN caused by feature engineering" + "\n" +
                       "Serials: " + str(len(data['serial_number'].unique())) + ", Shape: " + str(data.shape)+ "\n" +
@@ -266,6 +299,7 @@ if __name__ == "__main__":
                 start = timer()
                 cols_const = [col for col in data.columns if len(data[col].unique()) <= 1]
                 data = data.drop(data[cols_const], axis=1).copy()
+                if data.size==0 or 'serial_number' not in data.columns: print("Model " + model + " skipped due to zero or one sample size."); continue
                 end = timer()
                 print("After dropping constant columns caused by feature engineering" + "\n" +
                       "Serials: " + str(len(data['serial_number'].unique())) + ", Shape: " + str(data.shape) + "\n" +
@@ -276,24 +310,46 @@ if __name__ == "__main__":
                 # Reduce sample size
                 serials_filter = random.sample(list(data['serial_number'].unique()), int(len(data['serial_number'].unique()) * sample_size))
                 data = data.loc[data['serial_number'].apply(lambda x: x in serials_filter)].copy()
+                if data.size==0: print("Model " + model + " skipped due to zero or one sample size."); continue
                 end = timer()
                 print("After sample size reduction" + "\n" +
                       "Serials: " + str(len(data['serial_number'].unique())) + ", Shape: " + str(data.shape)+ "\n" +
                   "Task time: " + str(round(end - start, 2)) + "\n" +
                   "Total time: " + str(round(end - start_total, 2)))
-            # Remove rows before first non-zero measurement
-            # Some kind of elbow point detection
+            # Remove rows before first non-zero measurement of critical SMART values
+            # "Elbow point detection"
             if elbow_point_detection:
                 start = timer()
+                # Are the critical values even recorded after data preprocessing?
+                if not data.columns.isin(['Reallocated_Sector_Count', 'Reallocated_Sector_Count_norm', 'Spin_Retry_Count', 'Spin_Retry_Count_norm',
+                    'E2E_Error', 'E2E_Error_norm', 'Reported_Uncorrectable_Errors', 'Reported_Uncorrectable_Errors_norm',
+                    'Command_Timeout', 'Command_Timeout_norm', 'Reallocation_Event_Count', 'Reallocation_Event_Count_norm',
+                    'Current_Pending_Sector_Count', 'Current_Pending_Sector_Count_norm', 'Offline_Uncorrectable',
+                    'Offline_Uncorrectable_norm', 'Soft_Read_Error_Rate', 'Soft_Read_Error_Rate_norm']).any():
+                    print("Model " + model + " skipped, because no critical measurements were recorded.")
+                    continue
                 df2 = pd.DataFrame()
                 df = pd.DataFrame()
                 for ser in data['serial_number'].unique():
                     df = data[data['serial_number'] == ser].copy()
-                    df = df[((df.Reallocated_Sector_Count != 0).cumsum() > 0) |
-                            ((df.Reported_Uncorrectable_Errors != 0).cumsum() > 0) |
-                            ((df.Command_Timeout != 0).cumsum() > 0) |
-                            ((df.Current_Pending_Sector_Count != 0).cumsum() > 0) |
-                            ((df.Offline_Uncorrectable != 0).cumsum() > 0)]
+                    df = df[('Reallocated_Sector_Count' in df.columns and (df.Reallocated_Sector_Count != 0).cumsum() > 0) |
+                            ('Reallocated_Sector_Count_norm' in df.columns and (df.Reallocated_Sector_Count_norm != 1).cumsum() > 0) |
+                            ('Spin_Retry_Count' in df.columns and (df.Spin_Retry_Count != 0).cumsum() > 0) |
+                            ('Spin_Retry_Count_norm' in df.columns and (df.Spin_Retry_Count_norm != 1).cumsum() > 0) |
+                            ('E2E_Error' in df.columns and (df.E2E_Error != 0).cumsum() > 0) |
+                            ('E2E_Error_norm' in df.columns and (df.E2E_Error_norm != 1).cumsum() > 0) |
+                            ('Reported_Uncorrectable_Errors' in df.columns and (df.Reported_Uncorrectable_Errors != 0).cumsum() > 0) |
+                            ('Reported_Uncorrectable_Errors_norm' in df.columns and (df.Reported_Uncorrectable_Errors_norm != 1).cumsum() > 0) |
+                            ('Command_Timeout' in df.columns and (df.Command_Timeout != 0).cumsum() > 0) |
+                            ('Command_Timeout_norm' in df.columns and (df.Command_Timeout_norm != 1).cumsum() > 0) |
+                            ('Reallocation_Event_Count' in df.columns and (df.Reallocation_Event_Count != 0).cumsum() > 0) |
+                            ('Reallocation_Event_Count_norm' in df.columns and (df.Reallocation_Event_Count_norm != 1).cumsum() > 0) |
+                            ('Current_Pending_Sector_Count' in df.columns and (df.Current_Pending_Sector_Count != 0).cumsum() > 0) |
+                            ('Current_Pending_Sector_Count_norm' in df.columns and (df.Current_Pending_Sector_Count_norm != 1).cumsum() > 0) |
+                            ('Offline_Uncorrectable' in df.columns and (df.Offline_Uncorrectable != 0).cumsum() > 0) |
+                            ('Offline_Uncorrectable_norm' in df.columns and (df.Offline_Uncorrectable_norm != 1).cumsum() > 0) |
+                            ('Soft_Read_Error_Rate' in df.columns and (df.Soft_Read_Error_Rate != 0).cumsum() > 0) |
+                            ('Soft_Read_Error_Rate_norm' in df.columns and (df.Soft_Read_Error_Rate_norm != 1).cumsum() > 0)]
                     df2 = df2.append(df)
                 del df
                 data = df2.copy()
@@ -301,13 +357,15 @@ if __name__ == "__main__":
                 # Drop columns if all constant
                 cols_const = [col for col in data.columns if len(data[col].unique()) <= 1]
                 data = data.drop(data[cols_const], axis=1).copy()
+                if data.size==0 or 'serial_number' not in data.columns: print("Model " + model + " skipped due to zero or one sample size."); continue
+
                 end = timer()
                 print("After removal of rows before elbow point" + "\n" +
                         "Serials: " + str(len(data['serial_number'].unique())) + ", Shape: " + str(data.shape)+ "\n" +
                   "Task time: " + str(round(end - start, 2)) + "\n" +
                   "Total time: " + str(round(end - start_total, 2)))
             start = timer()
-            data.to_pickle(data_path + "data_preprocessed.pkl")
+            data.to_pickle(data_path + "data_preprocessed_" + model + ".pkl")
             end = timer()
             print("Dataset preprocessed and saved!" + "\n" +
                   "Serials: " + str(len(data['serial_number'].unique())) + ", Shape: " + str(data.shape)+ "\n" +
@@ -315,7 +373,7 @@ if __name__ == "__main__":
                   "Total time: " + str(round(end - start_total, 2)))
         elif train_test_split:
             start = timer()
-            data = pd.read_pickle(data_path + "data_preprocessed.pkl")
+            data = pd.read_pickle(data_path + "data_preprocessed_" + model + ".pkl")
             end = timer()
             print("Preprocessed dataset loaded!" + "\n" +
                   "Serials: " + str(len(data['serial_number'].unique())) + ", Shape: " + str(data.shape) + "\n" +
@@ -337,8 +395,10 @@ if __name__ == "__main__":
             del units
 
             df_n_test = data.loc[data['serial_number'].apply(lambda x: x in units_test)].copy()
+            if df_n_test.size==0: print("Model " + model + " skipped due to zero or one sample size."); continue
             del units_test
             df_n_train = data.loc[data['serial_number'].apply(lambda x: x in units_train)].copy()
+            if df_n_train.size==0: print("Model " + model + " skipped due to zero or one sample size."); continue
             del data
             del units_train
 
@@ -415,16 +475,20 @@ if __name__ == "__main__":
         ### SOF Cox Regression ###
         if cox:
             start = timer()
-            cols_no_data_cox = ['date', 'model', 'capacity_bytes', 'RUL', 'serial_number']
+            # read VIMP
+            vimp = pd.read_csv(data_path + "vimp_" + model + ".csv")
+            vimp_top = vimp.iloc[0:29,0].tolist()
             # Create Correlation Matrix (Pearson)
-            corr_matrix = df_n_train.drop(df_n_train[['Days_In_Service', 'failure']], axis=1).corr().abs()
+            corr_matrix = df_n_train[vimp_top].corr().abs()
+            #corr_matrix = df_n_train.drop(df_n_train[['Days_In_Service', 'failure']], axis=1).corr().abs()
             # Upper triangle
             upper = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(np.bool))
             # Find index of feature columns with correlation greater than n
             corr_drop = [column for column in upper.columns if any(upper[column] > 0.9)]
+            features = list(set(vimp_top) - set(corr_drop))
+            features.extend(['Days_In_Service', 'failure', 'serial_number'])
             # Drop features
-            xy_train = df_n_train[list(set(df_n_train.columns.values) - set(cols_no_data_cox)
-                                       - set(corr_drop))].copy()
+            xy_train = df_n_train[features].copy()
             # Drop columns if all constant
             #cols_const = [col for col in xy_train.drop('failure', axis=1).columns if len(xy_train[col].unique()) <= 1]
             #xy_train = xy_train.drop(xy_train[cols_const], axis=1).copy()
@@ -437,7 +501,7 @@ if __name__ == "__main__":
             start = timer()
             cph = CoxPHFitter(penalizer=0.5)  ## Instantiate the class to create a cph object
             cph.fit(xy_train, 'Days_In_Service', event_col='failure', show_progress=True,
-                    step_size=0.01)#, cluster_col='serial_number')
+                    step_size=0.01, cluster_col='serial_number')
             joblib.dump(cph, data_path + 'cox_model_' + model + '.pkl')
 
             # Load test set
@@ -449,17 +513,17 @@ if __name__ == "__main__":
                   "Total time: " + str(round(end - start_total, 2)))
             start = timer()
             # Filter test set for non data and highly correlated data
-            cols_no_data_cox = ['date', 'model', 'capacity_bytes', 'RUL', 'serial_number', 'failure']
-            X_test = df_n_train[list(set(df_n_train.columns.values) - set(cols_no_data_cox)
-                                       - set(corr_drop))].copy()
+            #cols_no_data_cox = ['date', 'model', 'capacity_bytes', 'RUL', 'serial_number', 'failure']
+            X_test = df_n_train[features].copy()
             xy_pred = pd.concat([qth_survival_times(0.9, cph.predict_survival_function(X_test)).transpose().reset_index(drop='index'),
                            X_test[['Days_In_Service']].reset_index(drop='index'),
                             df_n_test['RUL'].reset_index(drop='index')],
                           axis=1)
             xy_pred['pred'] = xy_pred.iloc[:, 0] - xy_pred['Days_In_Service']
+            xy_pred = pd.concat([xy_pred, df_n_test.reset_index(drop='index')],  axis=1)
             # Remove infs and NaNs
             xy_pred = xy_pred[~xy_pred.isin([np.nan, np.inf, -np.inf]).any(1)]
-
+            xy_pred.to_csv(data_path + "predictions_cox_" + model + ".csv")
             print("Cox test " + scoring.__name__ + ": %s" % scoring(xy_pred['pred'], xy_pred['RUL']))
             end = timer()
             print("Cox tested!" + "\n" +

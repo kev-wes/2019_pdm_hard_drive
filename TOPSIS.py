@@ -8,7 +8,7 @@ from scipy.spatial import distance
 # Possible fleet_type = ['Identical', 'Homogeneous', 'Heterogeneous']
 fleet_type = ['Homogeneous']
 # Possible fleet_feature_type = ['Numerical', 'Categorical', 'Semantics', 'None']
-fleet_feature_type = ['Categorical', 'None']
+fleet_feature_type = ['Categorical', 'None', 'Numerical']
 # Possible output_type = ['Point-estimate', 'Interval', 'Distribution']
 output_type = ['Point-estimate', 'Interval', 'Distribution']
 # Alternative/Criteria matrix
