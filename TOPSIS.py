@@ -8,7 +8,7 @@ from scipy.spatial import distance
 # Possible fleet_type = ['Identical', 'Homogeneous', 'Heterogeneous']
 fleet_type = ['Homogeneous']
 # Possible fleet_feature_type = ['Numerical', 'Categorical', 'Semantics', 'None']
-fleet_feature_type = ['Categorical', 'None', 'Numerical']
+fleet_feature_type = ['Categorical']
 # Possible output_type = ['Point-estimate', 'Interval', 'Distribution']
 output_type = ['Point-estimate', 'Interval', 'Distribution']
 # Alternative/Criteria matrix
@@ -21,7 +21,7 @@ A = data.iloc[:,4:13].values.astype(float)
 
 # Criteria weight
 #-------- Adjust weight according to use case --------#
-w = np.array([1, 4, 0, 10, 4, 4, 0, 0, 3]).astype(float)
+w = np.array([1, 5, 0, 10, 5, 5, 0, 0, 3]).astypee(float)
 #-----------------------------------------------------#
 
 # Normalize criteria

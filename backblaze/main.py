@@ -13,6 +13,7 @@ from timeit import default_timer as timer
 from lifelines import CoxPHFitter
 import numpy as np
 from lifelines.utils import qth_survival_times
+import time
 
 ### SOF Helper Functions ###
 def rms(num):
@@ -30,15 +31,21 @@ if __name__ == "__main__":
     cols_no_data = ['date', 'serial_number', 'model', 'capacity_bytes', 'failure', 'RUL']
     #filtered_models = ['ST4000DM000', 'ST12000NM0007', 'ST8000NM0055', 'ST8000DM002', 'HGST HMS5C4040BLE640']
     # Filtered models after preprocessing
-    '''filtered_models = ['HGST HMS5C4040ALE640', 'HGST HMS5C4040BLE640', 'HGST HUH721212ALN604', 'Hitachi HDS5C3030ALA630',
-                       'Hitachi HDS5C4040ALE630', 'Hitachi HDS722020ALA330', 'Hitachi HDS723030ALA640', 'ST250LM004 HN',
-                       'ST250LT007', 'ST320LT007', 'ST500LM012 HN', 'ST500LM030', 'ST4000DM000', 'ST4000DM001',
-                       'ST4000DM005', 'ST4000DX000', 'ST6000DX000', 'ST8000DM002', 'ST8000DM004', 'ST8000NM0055',
-                       'ST10000NM0086', 'ST12000NM0007', 'ST3160316AS', 'ST3160318AS', 'ST9250315AS',
-                       'TOSHIBA DT01ACA300', 'TOSHIBA MG07ACA14TA', 'TOSHIBA MQ01ABF050', 'TOSHIBA MQ01ABF050M',
-                       'WDC WD20EFRX', 'WDC WD30EFRX', 'WDC WD60EFRX', 'WDC WD800AAJS', 'WDC WD1600AAJB',
-                       'WDC WD1600AAJS', 'WDC WD5000LPVX']'''
-    filtered_models = ['T']
+    filtered_models = [ 'ST4000DX000',
+                        'ST6000DX000',
+                        'ST8000DM002',
+                        'ST8000NM0055',
+                        'ST10000NM0086',
+                        'ST12000NM0007',
+                        'ST3160318AS',
+                        'WDC WD30EFRX',
+                        'WDC WD60EFRX',
+                        'TOSHIBA MQ01ABF050',
+                        'ST4000DM000',
+                        'T',
+                        'H',
+                        'W',
+                        'ST']
     ## Init
     # Set this to false to skip csv reading and load pickle if it was already saved
     initialize_data_set = False
@@ -477,7 +484,8 @@ if __name__ == "__main__":
             start = timer()
             # read VIMP
             vimp = pd.read_csv(data_path + "vimp_" + model + ".csv")
-            vimp_top = vimp.iloc[0:29,0].tolist()
+            vimp_top = vimp.iloc[:,0].tolist()
+            # vimp_top = vimp.iloc[0:29,0].tolist()
             # Create Correlation Matrix (Pearson)
             corr_matrix = df_n_train[vimp_top].corr().abs()
             #corr_matrix = df_n_train.drop(df_n_train[['Days_In_Service', 'failure']], axis=1).corr().abs()
@@ -486,12 +494,13 @@ if __name__ == "__main__":
             # Find index of feature columns with correlation greater than n
             corr_drop = [column for column in upper.columns if any(upper[column] > 0.9)]
             features = list(set(vimp_top) - set(corr_drop))
-            features.extend(['Days_In_Service', 'failure', 'serial_number'])
+            features.extend(['failure', 'serial_number'])
+            if not 'Days_In_Service' in features: features.extend(['Days_In_Service'])
             # Drop features
             xy_train = df_n_train[features].copy()
             # Drop columns if all constant
-            #cols_const = [col for col in xy_train.drop('failure', axis=1).columns if len(xy_train[col].unique()) <= 1]
-            #xy_train = xy_train.drop(xy_train[cols_const], axis=1).copy()
+            cols_const = [col for col in xy_train.drop('failure', axis=1).columns if len(xy_train[col].unique()) <= 1]
+            xy_train = xy_train.drop(xy_train[cols_const], axis=1).copy()
             end = timer()
             print("Highly correlated variables of Cox data set removed!" + "\n" +
                   "Shape: " + str(xy_train.shape) + "\n" +
@@ -514,15 +523,15 @@ if __name__ == "__main__":
             start = timer()
             # Filter test set for non data and highly correlated data
             #cols_no_data_cox = ['date', 'model', 'capacity_bytes', 'RUL', 'serial_number', 'failure']
-            X_test = df_n_train[features].copy()
-            xy_pred = pd.concat([qth_survival_times(0.9, cph.predict_survival_function(X_test)).transpose().reset_index(drop='index'),
-                           X_test[['Days_In_Service']].reset_index(drop='index'),
-                            df_n_test['RUL'].reset_index(drop='index')],
-                          axis=1)
+            X_test = df_n_test[features].copy()
+            xy_pred = pd.concat([pd.DataFrame(qth_survival_times(0.9, cph.predict_survival_function(X_test)).transpose()).reset_index(drop='index'),
+                                 df_n_test.reset_index(drop='index')], axis=1)
             xy_pred['pred'] = xy_pred.iloc[:, 0] - xy_pred['Days_In_Service']
-            xy_pred = pd.concat([xy_pred, df_n_test.reset_index(drop='index')],  axis=1)
+            #xy_pred = pd.concat([xy_pred, df_n_test.reset_index(drop='index')],  axis=1)
             # Remove infs and NaNs
             xy_pred = xy_pred[~xy_pred.isin([np.nan, np.inf, -np.inf]).any(1)]
+            # Remove negative predictions
+            xy_pred['pred'] *= (xy_pred['pred'] > 0)
             xy_pred.to_csv(data_path + "predictions_cox_" + model + ".csv")
             print("Cox test " + scoring.__name__ + ": %s" % scoring(xy_pred['pred'], xy_pred['RUL']))
             end = timer()

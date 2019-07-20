@@ -1,7 +1,7 @@
 Source;Fleet Type;Fleet Feature Type;Output Type;Tolerance to missing values;Tolerance to noise;Performance on few data;General accuracy;Robustness;Speed;Memory efficiency;Explainability;Parameter handling
 (Salvador Palau et al. 2019);Heterogeneous;Numerical;Point-estimate;1;4;5;2;2;5;5;1;1
 (Jordan et al. 2018);Homogeneous;Categorical;Point-estimate;1;1;2;1;1;5;5;5;5
-"(Wang et al. 2012; Jardine et al. 2001)";Homogeneous;None;Distribution;3;1;3;1;1;4;4;5;5
+"(Wang et al. 2012; Jardine et al. 2001)";Homogeneous;Categorical;Distribution;3;1;3;1;1;4;4;4;5
 (Lukens and Markham 2018);Heterogeneous;Categorical;Point-estimate;3;1;3;1;1;4;5;5;5
 (Wolak 2018);Homogeneous;Categorical;Point-estimate;3;1;3;1;1;4;5;5;5
 (Bracke and Sochacki 2015);Homogeneous;None;Point-estimate;3;1;2;1;1;4;5;5;5
